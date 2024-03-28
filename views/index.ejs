@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="display-4">Maksym Fylypenko</h1>
+      <h2>Books I’ve read</h2>
+      <p class="lead">
+        Tiny summary but detailed notes for each. Use the ISBN number to find it
+        from your local library or anywhere else. This page will constantly update
+        as I read more, so bookmark it if you want to check back in a few months.
+      </p>
+      <p  class="lead">
+        Sorted with my top recommendations up top. Sort by 
+        <a href="?ordered_by=book_title">title</a>,
+        <a href="?ordered_by=read_date">newest</a>, or 
+        <a href="?ordered_by=rating">best.</a>
+      </p>
+
+      <h1>List of Books</h1>
+      <ul class="list-group">
+        <% books.forEach(book => { %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <img
+                  class="img-thumbnail"
+                  src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-M.jpg"
+                  alt="book cover"
+                />
+              </div>
+              <div class="col-sm-9">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <strong>Title:</strong> <%= book.book_title %><br />
+                    <strong>Author:</strong> <%= book.author %><br />
+                    <strong>Rating:</strong> <%= book.rating %> out of 10<br />
+                    <strong>ISBN:</strong> <%= book.isbn %><br />
+                    <strong>Date:</strong> <%= new Intl.DateTimeFormat('en-US', {
+                      year: 'numeric', month: 'long', day: 'numeric'
+                    }).format(new Date(book.read_date)) %><br /><br />
+                    <div><strong><i class="far fa-comment">Comment:</i></strong></div><%= book.comment %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+  </body>
+</html>
+

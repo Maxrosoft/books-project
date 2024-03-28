@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Page</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <style>
+      .nav-link {
+        background-color: #d1d1d6;
+        color: #1c1c1e;
+        border-radius: 20px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        width: 120px;
+        text-align: center;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+      }
+      .nav-link:hover {
+        background-color: #b8b8bd;
+        color: #1c1c1e;
+      }
+      .nav-link.add {
+        background-color: #61c654;
+      }
+      .nav-link.delete {
+        background-color: #ff4d4d;
+      }
+      .nav-link.update {
+        background-color: #ffc400;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Admin Panel</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        S
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link add" href="#" onclick="showSection('addBook')"
+              >Add</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link update"
+              href="#"
+              onclick="showSection('updateBook')"
+              >Update</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link delete"
+              href="#"
+              onclick="showSection('deleteBook')"
+              >Delete</a
+            >
+          </li>
+        </ul>
+        <a class="nav-link" href="/">
+            Home
+          </a>
+      </div>
+    </nav>
+
+    <div class="container" id="addBook">
+      <h1 class="display-4">Add Book</h1>
+      <div class="row">
+        <form action="/add" method="POST" class="col-sm-12">
+            <p class="text-danger">Fill in only the fields you want to add</p>
+          <div class="form-group row">
+            <label for="book_title" class="col-sm-2 col-form-label"
+              >Title</label
+            >
+            <div class="col-sm-10">
+              <input
+                type="text"
+                name="book_title"
+                class="form-control"
+                placeholder="Enter Title"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="author" class="col-sm-2 col-form-label">Author</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                name="author"
+                class="form-control"
+                placeholder="Enter Author"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                name="isbn"
+                class="form-control"
+                placeholder="Enter ISBN"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="rating" class="col-sm-2 col-form-label">Rating</label>
+            <div class="col-sm-10">
+              <input
+                type="number"
+                name="rating"
+                class="form-control"
+                placeholder="Enter Rating"
+                min="1"
+                max="10"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="date" class="col-sm-2 col-form-label">Date</label>
+            <div class="col-sm-10">
+              <input
+                type="date"
+                name="date"
+                class="form-control"
+                placeholder="Enter Date"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="comment" class="col-sm-2 col-form-label">Comment</label>
+            <div class="col-sm-10">
+              <textarea
+                name="comment"
+                rows="3"
+                cols="50"
+                class="form-control"
+                placeholder="Enter Comment"
+              ></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <input type="submit" class="btn btn-primary" value="Add" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="container" id="deleteBook" style="display: none">
+      <h1 class="display-4">Delete Book</h1>
+      <div class="row">
+        <div class="col-sm-6">
+          <form action="/delete" method="POST" class="form-group">
+            <div class="form-group">
+              <label for="isbn">ISBN <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                name="isbn"
+                class="form-control"
+                placeholder="Enter ISBN"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary" value="Delete" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="updateBook" style="display: none">
+      <h1 class="display-4">Update Book</h1>
+      <div class="row">
+        <form action="/update" method="POST" class="col-sm-12">
+          <div class="form-group row">
+            <label for="isbn" class="col-sm-2 col-form-label"
+              >ISBN <span class="text-danger">*</span></label
+            >
+            <div class="col-sm-10">
+              <input
+                type="text"
+                name="isbn"
+                class="form-control"
+                placeholder="Update by ISBN"
+                required
+              />
+            </div>
+          </div>
+          <p class="text-danger">Fill in only the fields you want to update</p>
+          <div class="form-group row">
+            <label for="book_title" class="col-sm-2 col-form-label"
+              >Title</label
+            >
+            <div class="col-sm-10">
+              <input
+                type="text"
+                name="book_title"
+                class="form-control"
+                placeholder="Enter Title"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="author" class="col-sm-2 col-form-label">Author</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                name="author"
+                class="form-control"
+                placeholder="Enter Author"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="rating" class="col-sm-2 col-form-label">Rating</label>
+            <div class="col-sm-10">
+              <input
+                type="number"
+                name="rating"
+                class="form-control"
+                placeholder="Enter Rating"
+                min="1"
+                max="10"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="date" class="col-sm-2 col-form-label">Date</label>
+            <div class="col-sm-10">
+              <input
+                type="date"
+                name="date"
+                class="form-control"
+                placeholder="Enter Date"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="comment" class="col-sm-2 col-form-label">Comment</label>
+            <div class="col-sm-10">
+              <textarea
+                name="comment"
+                rows="3"
+                cols="50"
+                class="form-control"
+                placeholder="Enter Comment"
+              ></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <input type="submit" class="btn btn-primary" value="Update" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function showSection(sectionId) {
+        var sections = document.querySelectorAll(".container");
+
+        sections.forEach(function (section) {
+          if (section.id === sectionId) {
+            section.style.display = "block";
+          } else {
+            section.style.display = "none";
+          }
+        });
+      }
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"
+      integrity="sha384-HgoftoW7j57WBSgjW/L8GJoaJKGjsvV1BfxGQb7uJqFStkz2clhRc7Kfd6vHTq3x"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shCk+Oy7n5Xv8hO8Jw8RbYrjyVIdh3KlCf3E+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
